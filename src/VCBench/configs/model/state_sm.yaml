@@ -1,0 +1,67 @@
+_target_: VCBench.modelcore.models.StateTransitionPerturbationModel
+
+use_cell_emb: false
+use_mask: true  # Unified mask switch for training loss and evaluation
+# use_covs is now auto-configured based on data.transform.use_covs
+# use_covs: False
+# cov_dim is auto-calculated from cov_keys in the data transform
+cell_set_len: ${data.cell_set_len}
+
+# Optimization
+lr: 1e-4
+wd: 1e-6
+
+# Learning rate scheduler configuration
+lr_scheduler_mode: onecycle  # Options: "onecycle", "plateau", "step"
+# lr_scheduler_max_lr: auto-calculated as lr * 10 (default)
+# lr_scheduler_total_steps: auto-calculated from dataloader size * max_epochs
+blur: 0.05
+hidden_dim: 672  # hidden dimension going into the transformer backbone
+loss: mse
+confidence_head: False
+n_encoder_layers: 4
+n_decoder_layers: 4
+predict_residual: True
+softplus: True
+freeze_pert_backbone: False
+transformer_decoder: False
+finetune_vci_decoder: False
+residual_decoder: False
+batch_encoder: False
+nb_decoder: False
+mask_attn: False
+use_effect_gating_token: False
+use_basal_projection: False
+distributional_loss: energy
+gene_decoder_bool: ${model.use_cell_emb}
+init_from: null
+transformer_backbone_key: llama
+transformer_backbone_kwargs:
+    bidirectional_attention: false
+    max_position_embeddings: ${model.cell_set_len}
+    hidden_size: ${model.hidden_dim}
+    intermediate_size: 2688
+    num_hidden_layers: 4
+    num_attention_heads: 8
+    num_key_value_heads: 8
+    head_dim: 84
+    use_cache: false
+    attention_dropout: 0.0
+    hidden_dropout: 0.0
+    layer_norm_eps: 1e-6
+    pad_token_id: 0
+    bos_token_id: 1
+    eos_token_id: 2
+    tie_word_embeddings: false
+    rotary_dim: 0
+    use_rotary_embeddings: false
+lora:
+    enable: false
+    r: 16
+    alpha: 32
+    dropout: 0.05
+    bias: none
+    target: auto
+    adapt_mlp: false
+    task_type: FEATURE_EXTRACTION
+    merge_on_eval: false

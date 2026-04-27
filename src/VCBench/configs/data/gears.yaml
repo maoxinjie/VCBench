@@ -1,0 +1,26 @@
+defaults:
+  - transform: gears_transform                         # Load transform configuration
+  - splitter: null               # Load splitter configuration
+  - evaluation: default                                 # Load evaluation configuration
+
+_target_: VCBench.data.modules.PertDataModule
+data_path: ${paths.data_dir}/norman19_processed.h5ad    # Path to preprocessed anndata
+train_batch_size: 32                                     # Training batch size
+val_batch_size: ${data.train_batch_size}                                      # Validation batch size
+test_batch_size: ${data.train_batch_size}                                    # Test batch size
+pert_key: perturbation                                  # Perturbation column name in adata.obs
+control_val: control                                    # Control group name in perturbation column
+cov_keys: [cell_cluster]                                   # Covariate column names
+result_avg_keys: [cell_cluster]
+perturbation_combination_delimiter: +                   # e.g.: Dual perturbation data perturbation name in pert1+pert2 format
+embedding_key: null #None                               # If not null, extract adata.obsm[embedding_key] during training as model input
+cov_avg_sampling: False                                 # If true, sample cells with equal proportion for each covariate during training
+add_keys: null                                          # Additional obs columns to use
+predict_controls: False                               # Model can predict control group
+sharing_controls: False
+sample_mode: cell
+cell_set_len: null
+train_num_workers: 8  # Set to 0 to avoid AF_UNIX path too long error
+val_num_workers: 8
+test_num_workers: 8
+n_top_hvgs: null                                        # If not null, only use top n_top_hvgs genes during training

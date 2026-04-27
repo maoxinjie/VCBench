@@ -1,0 +1,89 @@
+project: VCBench
+name: single_pertb_sciplex3
+method: grid
+
+metric:
+  goal: minimize
+  name: val_loss_epoch
+
+parameters:
+  # Fixed settings
+  data:
+    value: mix_pert
+  # data.task:
+  #   value: srivatsantrapnell2020_sciplex3
+  data.data_path:
+    values: [tasks/unseen_perts/SrivatsanTrapnell2020_sciplex3_stack_hvg_split.h5ad]
+
+  train:
+    value: true
+  test:
+    value: true
+
+  trainer.log_every_n_steps:
+    value: 10
+  trainer.max_epochs:
+    value: 50
+  trainer.min_epochs:
+    value: 0
+  trainer.devices:
+    value: 1
+
+  data.train_num_workers:
+    value: 0  # Set to 0 to avoid AF_UNIX path too long errors
+  data.val_num_workers:
+    value: 0
+  data.test_num_workers:
+    value: 0
+
+  data.transform.drug_map_path:
+    value: SMILES_pert_features.pt
+
+  model.use_mask:
+    value: false
+
+  data.train_batch_size:
+    values: [64]
+
+  data.cov_keys:
+    value: [cell_line]
+  data.result_avg_keys:
+    value: [cell_line] #do not fill any value
+  data.sample_mode:
+    value: cell
+  data.embedding_key:
+    value: stack-embed
+
+  # Sweep settings (note: model must be a single categorical value; do not turn it into a list)
+  model:
+    values: [ cpa]
+  model.use_cell_emb:
+    value: true
+
+  logger:
+    value: wandb
+  logger.wandb.project:
+    value: VCBench
+
+  model.lr:
+    values: [1e-5]
+
+  model.lr_scheduler_mode:
+    value: onecycle  # Use ReduceLROnPlateau for better convergence
+
+
+  model.wd:
+    # values: [1e-8, 1e-7, 1e-6, 1e-5, 1e-4]
+    values: [1e-7]
+
+  # Early stopping parameters
+  callbacks.early_stopping.monitor:
+    values: ["val_loss_epoch"]
+  callbacks.early_stopping.patience:
+    values: [50]
+
+program: src/VCBench/modelcore/train.py
+command:
+  - python
+  - ${program}
+  - ${args}

@@ -1,0 +1,18 @@
+_target_: VCBench.modelcore.models.DecoderOnly
+## Optimizer params
+lr: 6.72106935566634e-05
+wd: 7.90200208844498e-09
+
+## Model params
+n_layers: 3
+encoder_width: 3072
+softplus_output: True
+# use_covs is now auto-configured based on data.transform.use_covs
+# use_covs: False
+use_perturbations: True
+use_mask: true  # Unified mask switch for training loss and evaluation
+use_cell_emb: false
+# Learning rate scheduler configuration
+lr_scheduler_mode: onecycle  # OneCycleLR for better convergence
+# lr_scheduler_max_lr: 0.001   # Max learning rate for OneCycleLR
+# lr_scheduler_total_steps: auto-calculated from dataloader size * max_epochs

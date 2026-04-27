@@ -1,0 +1,29 @@
+_target_: VCBench.modelcore.models.SparseAdditiveVAE
+
+use_cell_emb: False
+use_mask: true  # Unified mask switch for training loss and evaluation
+pert_comb_delim: ${data.perturbation_combination_delimiter}
+## Model params
+n_layers_encoder_x: 5
+n_layers_encoder_e: 3
+n_layers_decoder: 4
+hidden_dim_x: 2332
+hidden_dim_cond: 329
+latent_dim: 55
+dropout: 0.2
+# use_covs is now auto-configured based on data.transform.use_covs
+# use_covs: False
+mask_prior_probability: 0.01
+softplus_output: True
+disable_sparsity: false
+disable_e_dist: false
+generative_counterfactual: true # Otherwise the task is to reconstruct the perturbed distribution
+
+## Optimizer params
+lr: 1e-4  # Reduced learning rate for better numerical stability
+wd: 2.4153279969771546e-05
+
+# Learning rate scheduler configuration
+lr_scheduler_mode: onecycle  # OneCycleLR for better convergence
+# lr_scheduler_max_lr: 0.001   # Max learning rate for OneCycleLR
+# lr_scheduler_total_steps: auto-calculated from dataloader size * max_epochs

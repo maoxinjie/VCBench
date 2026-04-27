@@ -1,0 +1,8 @@
+_target_: VCBench.data.transforms.OneHotTransform
+_partial_: true
+pert_key: ${data.pert_key}
+cov_keys: ${data.cov_keys}
+pert_map_path: ${paths.work_dir}/linear_pert_map.pt
+cov_maps_path: ${paths.work_dir}/linear_cov_maps.pt
+use_embedding_key: ${model.use_cell_emb}
+pert_comb_delim: ${data.perturbation_combination_delimiter}

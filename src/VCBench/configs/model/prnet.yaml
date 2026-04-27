@@ -1,0 +1,29 @@
+_target_: VCBench.modelcore.models.prnet.PRNet
+use_cell_emb: False
+use_mask: true  # Unified mask switch for training loss and evaluation
+lr: 1e-3
+wd: 1e-5
+lr_scheduler_factor: 0.2
+# lr_scheduler_patience: 15
+lr_scheduler_interval: epoch
+lr_scheduler_freq: 1
+lr_scheduler_mode: onecycle  # OneCycleLR for better convergence
+# lr_scheduler_max_lr: 0.001   # Max learning rate for OneCycleLR
+# lr_scheduler_total_steps: auto-calculated from dataloader size * max_epochs
+lr_monitor_key: val_loss
+z_dimension: 10
+comb_dimension: 50
+adaptor_hidden_dim: 128
+adaptor_n_layers: 1
+encoder_hidden_dim: 128
+encoder_n_layers: 2
+decoder_hidden_dim: 128
+decoder_n_layers: 2
+dropout: 0.05
+# use_covs is now auto-configured based on data.transform.use_covs
+# use_covs: False
+perturbation_combination_delimiter: ${data.perturbation_combination_delimiter}
+control_token: ${data.control_val}
+auto_focus_gamma: 2.0
+# False: MSE; True: Gaussian NLL
+use_uncertainty: True

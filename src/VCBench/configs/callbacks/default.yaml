@@ -1,0 +1,32 @@
+defaults:
+  - early_stopping
+  - lr_monitor
+  - model_summary
+  - rich_progress_bar
+  - _self_
+
+model_summary:
+  max_depth: -1
+
+# Checkpoint callback for loss only
+# Modified to save only best val_loss checkpoint
+# Using RobustModelCheckpoint to handle disk quota errors gracefully
+model_checkpoint_loss:
+  _target_: VCBench.modelcore.callbacks.robust_checkpoint.RobustModelCheckpoint
+  monitor: val_loss_epoch
+  mode: min
+  dirpath: ${paths.output_dir}/checkpoints
+  filename: "best-{epoch:02d}-{step:06d}-{val_loss_epoch:.4f}"
+  save_top_k: 1  # Strictly save only 1 best checkpoint
+  save_last: false
+  auto_insert_metric_name: false  # Disable auto versioning
+
+# Optional: Save last checkpoint for easy resume
+# Disabled by default to save disk space (only keep best loss and PCC checkpoints)
+# Uncomment to enable:
+# model_checkpoint_last:
+#   _target_: VCBench.modelcore.callbacks.robust_checkpoint.RobustModelCheckpoint
+#   dirpath: ${paths.output_dir}/checkpoints
+#   filename: "last"
+#   save_top_k: 0  # Don't save best, only last
+#   save_last: true

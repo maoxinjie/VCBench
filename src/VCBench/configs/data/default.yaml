@@ -1,0 +1,25 @@
+defaults:
+  - transform: default                                   # Load transform configuration
+  - splitter: combination_prediction_task               # Load splitter configuration
+  - evaluation: default                                 # Load evaluation configuration
+
+_target_: VCBench.data.modules.PertDataModule
+data_path: ${paths.data_dir}/norman19_processed.h5ad    # Path to preprocessed anndata
+train_batch_size: 1000                                  # Training batch size
+val_batch_size: 1000                                       # Validation batch size
+test_batch_size: 1000                                      # Test batch size
+pert_key: condition                                     # Perturbation column name in adata.obs
+control_val: control                                    # Control group name in perturbation column
+cov_keys: [cell_type]                                   # Covariate column names
+perturbation_combination_delimiter: +                   # e.g.: Dual perturbation data perturbation name in pert1+pert2 format
+embedding_key: null #None                               # If not null, extract adata.obsm[embedding_key] during training as model input
+cov_avg_sampling: False                                 # If true, sample cells with equal proportion for each covariate during training
+add_keys: null                                          # Additional obs columns to use
+train_num_workers: 16
+val_num_workers: 16
+test_num_workers: 16
+task: null                                              # Allow overriding data.task via CLI / sweep
+n_top_hvgs: null                                        # If not null, only use top n_top_hvgs genes during training
+
+splitter:
+  max_heldout_fraction_per_covariate: 0.7               # Override splitter parameters

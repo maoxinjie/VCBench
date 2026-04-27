@@ -1,0 +1,24 @@
+_target_: VCBench.data.transforms.MixPertTransform
+_partial_: true
+gene_key: ${data.gene_key} # Sync parameters from data yaml configuration
+drug_key: ${data.drug_key}
+env_key: ${data.env_key}
+crispr_key: ${data.crispr_key}
+cov_keys: ${data.cov_keys}
+
+# Storage paths for perturbation and covariate embedding dictionaries
+crispr_map_path: null
+gene_map_path: null
+drug_map_path: null
+env_map_path: null
+cov_maps_path: null
+
+null_token: '' # What to use to replace missing perturbation values
+# use_covs: ${model.inject_covariates_encoder} # Sync parameters from selected model yaml configuration
+use_covs: false
+use_cell_emb: true # Whether to use pre-trained cell embeddings
+comb_delim: ${data.perturbation_combination_delimiter}
+
+# Padded tensor parameters (suitable for multiprocessing data loading)
+max_gene_perts: 2  # Maximum number of gene perturbations (will be truncated if exceeded)
+max_drug_perts: 2  # Maximum number of drug perturbations (will be truncated if exceeded)

@@ -1,0 +1,24 @@
+_target_: VCBench.modelcore.models.BiolordStar
+use_mask: true  # Unified mask switch for training loss and evaluation
+# use_covs is now auto-configured based on data.transform.use_covs
+# use_covs: False
+
+## Optimizer params
+lr: 6.72106935566634e-05
+wd: 7.90200208844498e-09
+# lr: 1e-8
+# wd: 1e-4
+penalty_weight: 1.0
+
+## Model params
+n_layers: 3
+encoder_width: 512  # Reduced from 3072 to 512, parameter count reduced by about 36 times
+latent_dim: 32
+softplus_output: True
+dropout: 0.1
+
+# Learning rate scheduler configuration
+lr_scheduler_mode: onecycle  # OneCycleLR for better convergence
+# lr_scheduler_max_lr: auto-calculated as lr * 10 (default)
+# lr_scheduler_total_steps: auto-calculated from dataloader size * max_epochs
+use_cell_emb: False

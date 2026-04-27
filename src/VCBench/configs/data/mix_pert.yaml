@@ -1,0 +1,36 @@
+defaults:
+- transform: mix_pert_transform                        # Load transform configuration
+- splitter: null                                      # Load splitter configuration
+- evaluation: default                                 # Load evaluation configuration
+
+_target_: VCBench.data.modules.PertDataModule
+mask_type: cell
+data_path: ./data/all_cell_line_filterdrug.h5ad    # Path to preprocessed anndata
+train_batch_size: 300                                   # Training batch size
+val_batch_size: ${data.train_batch_size}                                     # Validation batch size
+test_batch_size: ${data.train_batch_size}                                    # Test batch size
+gene_key: gene_pt                                       # Gene perturbation column name
+drug_key: drug_pt                                       # Drug perturbation column name
+env_key: env_pt                                         # Environment perturbation column name
+crispr_key: CRISPR                                      # CRISPR i/a/ko
+result_avg_keys: [cell_cluster]                         # On which dimension to average final results
+control_val: control                                    # Control group name in perturbation column
+cov_keys: [cell_cluster,dataset]                        # Covariate column names
+perturbation_combination_delimiter: +                   # e.g.: Dual perturbation data perturbation name in pert1+pert2 format
+embedding_key: null #None                               # If not null, extract adata.obsm[embedding_key] during training as model input
+cov_avg_sampling: False                                 # If true, sample cells with equal proportion for each covariate during training
+add_keys: null                                          # Additional obs columns to use
+train_num_workers: 4   # Padded tensor format supports multiprocessing
+val_num_workers: 2
+test_num_workers: 2
+task: null                                                  # Task name for external CSV split: unseen_cell / single_dataset_test / single_dataset_two_cellline / two_datasets_two_celllines
+split_dir: null                                             # Base directory for split CSV files (default: ./split)
+# cell_set_len and sample_mode are automatically set by train.py based on model type:
+# - state_transition models: sample_mode=set, cell_set_len from model config (default 128)
+# - other models: sample_mode=cell, cell_set_len=None
+# Do not set cell_set_len here manually!
+sample_mode: cell
+cell_set_len: 128
+n_top_hvgs: null                                        # If not null, only use top n_top_hvgs genes during training
+# splitter:
+#   max_heldout_fraction_per_covariate: 0.7               # Override splitter parameters

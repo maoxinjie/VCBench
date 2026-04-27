@@ -1,0 +1,12 @@
+_target_: VCBench.modelcore.models.LinearAdditive
+lr: 0.0047168133094877523
+wd:  1.7588044643755207e-08
+# use_covs is now auto-configured based on data.transform.use_covs
+# use_covs: False
+use_cell_emb: False
+use_mask: true  # Unified mask switch for training loss and evaluation
+
+# Learning rate scheduler configuration
+lr_scheduler_mode: onecycle  # OneCycleLR for better convergence
+# lr_scheduler_max_lr: 0.001   # Max learning rate for OneCycleLR
+# lr_scheduler_total_steps: auto-calculated from dataloader size * max_epochs

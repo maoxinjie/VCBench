@@ -1,0 +1,33 @@
+_target_: VCBench.modelcore.models.CPA
+
+use_cell_emb: False
+use_mask: true  # Unified mask switch for training loss and evaluation
+
+n_latent: 128
+hidden_dim: 256
+n_layers_encoder: 3
+n_layers_pert_emb: 2
+n_layers_covar_emb: 1
+
+variational: True
+
+adv_classifier_n_layers: 2
+adv_classifier_hidden_dim: 128
+
+lr: 1e-5
+wd: 1e-8
+
+dropout: 1e-1
+kl_weight: 1.0
+adv_weight: 1.0
+penalty_weight: 10.0
+adv_steps: 2
+n_warmup_epochs: 5
+
+lr_scheduler_patience: 1
+lr_scheduler_factor: 0.2
+lr_scheduler_mode: onecycle  # OneCycleLR for better convergence
+# lr_scheduler_max_lr: auto-calculated as lr * 10 (default)
+# lr_scheduler_total_steps: auto-calculated from dataloader size * max_epochs
+softplus_output: False
+elementwise_affine: False

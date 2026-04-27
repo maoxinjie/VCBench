@@ -1,0 +1,112 @@
+project: VCBench
+name: norman_hvg_0123_state_16
+method: grid
+
+metric:
+  goal: minimize
+  name: val_loss_epoch
+
+parameters:
+  # Fixed settings
+  data:
+    value: mix_pert
+  data.sample_mode:
+    value: set
+  data.cov_keys:
+    value: [split_category]
+  data.result_avg_keys:
+    value: [split_category]
+  # data.task:
+  #   value: srivatsantrapnell2020_sciplex3
+  data.data_path:
+    value: ./tasks/unseen_perts/norman2019_comb_stack.h5ad
+  data.embedding_key:
+    value: null
+
+  train:
+    value: true
+  test:
+    value: true
+  trainer.log_every_n_steps:
+    value: 10
+  trainer.max_epochs:
+    value: 50
+  trainer.min_epochs:
+    value: 0
+  trainer.devices:
+    value: 1
+
+  data.train_num_workers:
+    value: 0
+  data.val_num_workers:
+    value: 0
+  data.test_num_workers:
+    value: 0
+
+  data.transform.use_covs:
+    value: false
+  data.cell_set_len:
+    values: [128]
+  data.transform.gene_map_path:
+    value: ./ESM2_pert_features.pt
+
+  model.use_mask:
+    value: false
+  model.use_cell_emb:
+    value: false
+
+  data.train_batch_size:
+    values: [32]
+
+  # Sweep settings (note: model must be a single categorical value; do not turn it into a list)
+  model:
+    values: [state_sm]
+    # values: [biolord, cpa, genepert, sclambda, squidiff, decoder_only, gears, latent_additive, linear_additive, prnet, sams_vae, state_sm]
+  
+
+  logger:
+    value: wandb
+  logger.wandb.project:
+    value: _norman
+  # logger.wandb.name is auto-generated from model name, format: {model}_lr{lr}
+  # model.dropout:
+  #   distribution: uniform
+  #   min: 0.0
+  #   max: 0.3
+
+  model.lr:
+    values: [1e-5]
+    # distribution: log_uniform_values
+    # min: 1e-6
+    # max: 1e-3
+
+  # Learning rate scheduler parameters (unified across all models)
+  model.lr_scheduler_mode:
+    value: onecycle  # Use ReduceLROnPlateau for better convergence
+  # model.lr_scheduler_patience:
+  #   value: 10  # Wait 10 epochs before reducing LR when val_loss stops improving
+  # model.lr_scheduler_factor:
+  #   value: 0.5  # Reduce LR by factor of 0.5
+
+  # model.lr_scheduler_max_lr:
+  #   distribution: log_uniform_values
+  #   min: 1e-4
+  #   max: 1e-2
+
+  model.wd:
+    # values: [1e-8, 1e-7, 1e-6, 1e-5, 1e-4]
+    values: [1e-7]
+
+  # Early stopping parameters
+  callbacks.early_stopping.monitor:
+    values: ["val_loss_epoch"]
+  callbacks.early_stopping.patience:
+    values: [50]
+
+# Key point: command only includes program; all hyperparameters are injected by wandb via ${args} (--key value)
+
+program: src/VCBench/modelcore/train.py
+command:
+  - python
+  - ${program}
+  - ${args}

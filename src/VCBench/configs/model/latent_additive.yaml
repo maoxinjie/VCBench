@@ -1,0 +1,20 @@
+_target_: VCBench.modelcore.models.LatentAdditive
+use_cell_emb: False
+use_mask: true  # Unified mask switch for training loss and evaluation
+n_layers: 3
+encoder_width: 128
+latent_dim: 160
+# lr: 6.72106935566634e-05
+lr: 1e-08
+# wd: 7.90200208844498e-09
+wd: 1e-4
+dropout: 0.1
+softplus_output: True
+sparse_additive_mechanism: False
+# use_covs is now auto-configured based on data.transform.use_covs
+# use_covs: False
+
+# Learning rate scheduler configuration
+lr_scheduler_mode: onecycle  # OneCycleLR for better convergence
+# lr_scheduler_max_lr: 0.001   # Max learning rate (higher than initial)
+# lr_scheduler_total_steps: auto-calculated from dataloader size * max_epochs

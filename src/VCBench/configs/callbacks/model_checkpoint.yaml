@@ -1,0 +1,13 @@
+# Single checkpoint callback - save best loss only
+# Modified to save only best val_loss checkpoint
+# Using RobustModelCheckpoint to handle disk quota errors gracefully
+
+model_checkpoint_loss:
+  _target_: VCBench.modelcore.callbacks.robust_checkpoint.RobustModelCheckpoint
+  monitor: val_loss_epoch    # Monitor epoch-level val_loss (more stable)
+  mode: min                  # Lower is better
+  dirpath: ${paths.output_dir}/checkpoints
+  filename: "best-{epoch:02d}-{step:06d}-{val_loss_epoch:.4f}"
+  save_top_k: 1  # Strictly save only 1 best checkpoint
+  save_last: false
+  auto_insert_metric_name: false  # Disable auto versioning
