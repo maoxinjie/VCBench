@@ -4,23 +4,6 @@ VCBench is a unified framework for single-cell perturbation effect prediction an
 
 Paper demo site: <https://maoxinjie.github.io/VCBench-demo/>
 
-## Acknowledgement
-
-The overall implementation and project organization are built on top of [PerturBench](https://github.com/altoslabs/perturbench).
-
-## Citation
-
-If you use VCBench in your research, or build upon its framework design, please also cite PerturBench:
-
-```bibtex
-@article{wu2025perturbench,
-  title={Perturbench: Benchmarking machine learning models for cellular perturbation analysis},
-  author={Wu, Yan and Wershof, Esther and Schmon, Sebastian M and Nassar, Marcel and Osi{\'n}ski, B{\l}a{\.z}ej and Eksi, Ridvan and Yan, Zichao and Stark, Rory and Zhang, Kun and Graepel, Thore},
-  journal={arXiv preprint arXiv:2408.10609},
-  year={2024}
-}
-```
-
 ---
 
 ## 1. Environment Setup
@@ -260,3 +243,22 @@ python src/VCBench/modelcore/train.py model=<your_model> train=true test=true
 
 - `NEW_MODEL_INTEGRATION.md`: full guide for integrating new models.
 - `RUN_TUTORIAL.md`: data preparation and experiment running guide.
+
+---
+
+## Acknowledgement
+
+The overall implementation and project organization are built on top of [PerturBench](https://github.com/altoslabs/perturbench).
+
+## Citation
+
+If you use VCBench in your research, or build upon its framework design, please also cite PerturBench:
+
+```bibtex
+@article{wu2025perturbench,
+  title={Perturbench: Benchmarking machine learning models for cellular perturbation analysis},
+  author={Wu, Yan and Wershof, Esther and Schmon, Sebastian M and Nassar, Marcel and Osi{\'n}ski, B{\l}a{\.z}ej and Eksi, Ridvan and Yan, Zichao and Stark, Rory and Zhang, Kun and Graepel, Thore},
+  journal={arXiv preprint arXiv:2408.10609},
+  year={2024}
+}
+```
