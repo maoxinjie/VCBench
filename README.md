@@ -157,6 +157,9 @@ You can start with a single trial run:
 wandb agent --count 1 [entity/project/sweep_id]
 ```
 
+For single-run scripts such as `scripts/biolord.sh`, the default logger is
+`csv`; set `VCBENCH_LOGGER=wandb` to log the run to W&B.
+
 ---
 
 ## 5. Integrating a New Model (Minimal Viable Flow)

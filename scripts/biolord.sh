@@ -3,6 +3,7 @@ cd "$PROJECT_ROOT"
 
 DATA_PATH="${VCBENCH_DATA_PATH:-$PROJECT_ROOT/tasks_data/unseen_perts/norman2019_comb_stack.h5ad}"
 GENE_MAP_PATH="${VCBENCH_GENE_MAP_PATH:-$PROJECT_ROOT/tasks_data/model_related/ESM2_pert_features.pt}"
+LOGGER="${VCBENCH_LOGGER:-csv}"
 
 export PYTHONPATH="$PYTHONPATH:$PROJECT_ROOT/src"
 export TMPDIR=/tmp  # Avoid AF_UNIX path too long
@@ -25,5 +26,5 @@ data.transform.gene_map_path="$GENE_MAP_PATH" \
 model=biolord \
 model.use_cell_emb=false \
 model.use_mask=false \
-logger=csv \
+logger="$LOGGER" \
 data.data_path="$DATA_PATH"

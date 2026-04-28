@@ -155,3 +155,6 @@ python src/VCBench/modelcore/train.py \
   train=false \
   test=false
 ```
+
+For single-run scripts such as `scripts/biolord.sh`, the default logger is
+`csv`; set `VCBENCH_LOGGER=wandb` to log the run to W&B.
