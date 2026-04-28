@@ -32,12 +32,6 @@ VCBench/
 │       └── essential_all_data_pert_genes.pkl
 ```
 
-If the data already exists elsewhere, create a symlink:
-
-```bash
-ln -s /path/to/tasks_data ./tasks_data
-```
-
 ## 4. Configure Data Paths
 
 ### Norman Dataset
@@ -119,6 +113,7 @@ First, switch to the project root directory in the terminal:
 ```bash
 conda env create -f ./vcbench.yml
 conda activate vcbench
+pip install torch-scatter==2.1.2 -f https://data.pyg.org/whl/torch-2.8.0+cu128.html
 pip install -e .
 ```
 

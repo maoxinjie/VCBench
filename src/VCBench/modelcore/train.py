@@ -317,10 +317,11 @@ def get_auto_experiment_name(cfg: DictConfig, model_name: str) -> str:
 
     auto_name = f"{model_name}_lr{lr_str}_wd{wd_str}_bs{batch_size_str}"
 
-    # Modify config (before logger creation)
-    OmegaConf.update(cfg, "logger.wandb.name", auto_name, merge=False)
-    log.info("Auto-generated wandb run name: %s (model: %s, lr: %s, wd: %s, bs: %s)",
-             auto_name, model_name, lr_str, wd_str, batch_size_str)
+    # Modify config before logger creation only when the wandb logger is enabled.
+    if cfg.get("logger") and cfg.logger.get("wandb"):
+        OmegaConf.update(cfg, "logger.wandb.name", auto_name, merge=False)
+        log.info("Auto-generated wandb run name: %s (model: %s, lr: %s, wd: %s, bs: %s)",
+                 auto_name, model_name, lr_str, wd_str, batch_size_str)
     return auto_name
 
 def train(runtime_context: dict):

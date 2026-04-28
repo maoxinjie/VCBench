@@ -16,6 +16,7 @@ On a Linux GPU machine, run the following commands in the project root:
 ```bash
 conda env create -f ./vcbench.yml
 conda activate vcbench
+pip install torch-scatter==2.1.2 -f https://data.pyg.org/whl/torch-2.8.0+cu128.html
 pip install -e .
 ```
 
@@ -56,12 +57,6 @@ Download the following folders from Google Drive and place them under
 - `model_related`
 
 Download link: <https://drive.google.com/drive/folders/1GrPW9x5_npnT7ILwDVsFWvfDIcqaSjdk?usp=drive_link>
-
-If the data already exists elsewhere, create a symlink from the project root:
-
-```bash
-ln -s /path/to/tasks_data ./tasks_data
-```
 
 ### 3.2 Set Data File Paths (Sweep Configs)
 

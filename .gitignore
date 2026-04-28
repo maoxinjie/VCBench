@@ -3,3 +3,8 @@ __pycache__/
 *.pyo
 *.pyd
 *.egg-info/
+envs/
+tasks_data/
+outputs/
+multirun/
+logs/
