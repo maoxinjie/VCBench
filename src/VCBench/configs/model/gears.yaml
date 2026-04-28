@@ -1,7 +1,7 @@
 _target_: VCBench.modelcore.models.GEARS
 data_path: ${paths.work_dir}
-gene2go_path: data/gene2go.pkl
-gene_set_path: data/essential_all_data_pert_genes.pkl
+gene2go_path: ${paths.data_dir}/model_related/gene2go.pkl
+gene_set_path: ${paths.data_dir}/model_related/essential_all_data_pert_genes.pkl
 # pert_key: ${data.pert_key}
 pert_key: ${data.pert_key}
 comb_delim: ${data.perturbation_combination_delimiter}

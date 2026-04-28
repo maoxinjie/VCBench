@@ -8,7 +8,10 @@ Paper demo site: <https://maoxinjie.github.io/VCBench-demo/>
 
 ## 1. Environment Setup
 
-Run the following commands in the project root:
+`vcbench.yml` is intended for Linux x86_64 GPU reproduction. For other
+platforms, use it as a reference dependency list and adjust packages as needed.
+
+On a Linux GPU machine, run the following commands in the project root:
 
 ```bash
 conda env create -f ./vcbench.yml
@@ -16,7 +19,7 @@ conda activate vcbench
 pip install -e .
 ```
 
-Configure W&B:
+Configure W&B before running sweeps:
 
 ```bash
 wandb login
@@ -46,31 +49,41 @@ VCBench/
 
 ### 3.1 Download Data
 
-Download the following folders from Google Drive and place them in the project root:
+Download the following folders from Google Drive and place them under
+`./tasks_data/` in the project root:
 
 - `unseen_perts`
 - `model_related`
 
-Download link: <https://drive.google.com/drive/folders/1GrPW9x5_npnT7ILwDVsFWvfDIcqaSjdk?usp=sharing>
+Download link: <https://drive.google.com/drive/folders/1GrPW9x5_npnT7ILwDVsFWvfDIcqaSjdk?usp=drive_link>
+
+If the data already exists elsewhere, create a symlink from the project root:
+
+```bash
+ln -s /path/to/tasks_data ./tasks_data
+```
 
 ### 3.2 Set Data File Paths (Sweep Configs)
 
-- In `./sweep/norman/*.yaml`, set `parameters.data.data_path` to:
+The committed sweep configs already use these paths. If you create new sweep
+files, use the same layout:
+
+- Norman:
 
 ```yaml
-./unseen_perts/norman2019_comb_stack.h5ad
+./tasks_data/unseen_perts/norman2019_comb_stack.h5ad
 ```
 
-- In `./sweep/replogle/*.yaml`, set `parameters.data.data_path` to:
+- Replogle:
 
 ```yaml
-./unseen_perts/ReplogleWeissman2022_K562_stack_hvg_split.h5ad
+./tasks_data/unseen_perts/ReplogleWeissman2022_K562_stack_hvg_split.h5ad
 ```
 
-- In `./sweep/sciplex/*.yaml`, set `parameters.data.data_path` to:
+- Sciplex:
 
 ```yaml
-./unseen_perts/SrivatsanTrapnell2020_sciplex3_stack_hvg_split.h5ad
+./tasks_data/unseen_perts/SrivatsanTrapnell2020_sciplex3_stack_hvg_split.h5ad
 ```
 
 ### 3.3 Set Feature Mapping Paths
@@ -78,34 +91,34 @@ Download link: <https://drive.google.com/drive/folders/1GrPW9x5_npnT7ILwDVsFWvfD
 - Norman / Replogle: `parameters.data.transform.gene_map_path`
 
 ```yaml
-./model_related/ESM2_pert_features.pt
+./tasks_data/model_related/ESM2_pert_features.pt
 ```
 
 - Sciplex: `parameters.data.transform.drug_map_path`
 
 ```yaml
-./model_related/SMILES_pert_features.pt
+./tasks_data/model_related/SMILES_pert_features.pt
 ```
 
 ### 3.4 Additional GEARS Configuration
 
-- In `./sweep/norman/no-stack/gears.yaml`, set `parameters.model.data_path`:
+GEARS also needs precomputed `go.csv` and `co-express.csv` directories. Place
+them under `./tasks_data/gears_norman` and `./tasks_data/gears_replogle`, then
+set `parameters.model.data_path` accordingly:
 
 ```yaml
-./gears_norman
+./tasks_data/gears_norman
 ```
 
-- In `./sweep/replogle/no-stack/gears.yaml`, set `parameters.model.data_path`:
-
 ```yaml
-./gears_replogle
+./tasks_data/gears_replogle
 ```
 
 - In `./src/VCBench/configs/model/gears.yaml`, set:
 
 ```yaml
-gene2go_path: ./model_related/gene2go.pkl
-gene_set_path: ./model_related/essential_all_data_pert_genes.pkl
+gene2go_path: ${paths.data_dir}/model_related/gene2go.pkl
+gene_set_path: ${paths.data_dir}/model_related/essential_all_data_pert_genes.pkl
 ```
 
 ---
@@ -115,13 +128,25 @@ gene_set_path: ./model_related/essential_all_data_pert_genes.pkl
 ### 4.1 Use `train.py` (Hydra)
 
 ```bash
-python src/VCBench/modelcore/train.py model=latent_additive train=true test=true
+python src/VCBench/modelcore/train.py \
+  data=mix_pert \
+  model=latent_additive \
+  data.data_path=./tasks_data/unseen_perts/norman2019_comb_stack.h5ad \
+  data.transform.gene_map_path=./tasks_data/model_related/ESM2_pert_features.pt \
+  train=true \
+  test=true
 ```
 
 Quick config check (no training):
 
 ```bash
-python src/VCBench/modelcore/train.py model=latent_additive train=false test=false
+python src/VCBench/modelcore/train.py \
+  data=mix_pert \
+  model=latent_additive \
+  data.data_path=./tasks_data/unseen_perts/norman2019_comb_stack.h5ad \
+  data.transform.gene_map_path=./tasks_data/model_related/ESM2_pert_features.pt \
+  train=false \
+  test=false
 ```
 
 ### 4.2 Use W&B Sweep

@@ -13,7 +13,7 @@ parameters:
   # data.task:
   #   value: srivatsantrapnell2020_sciplex3
   data.data_path:
-    values: [./tasks/unseen_perts/norman2019_comb_stack.h5ad]
+    values: [./tasks_data/unseen_perts/norman2019_comb_stack.h5ad]
   train:
     value: true
   test:
@@ -35,7 +35,7 @@ parameters:
     value: 0
 
   data.transform.gene_map_path:
-    value: ESM2_pert_features.pt
+    value: ./tasks_data/model_related/ESM2_pert_features.pt
 
   model.use_mask:
     value: false

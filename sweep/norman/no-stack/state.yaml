@@ -19,7 +19,7 @@ parameters:
   # data.task:
   #   value: srivatsantrapnell2020_sciplex3
   data.data_path:
-    value: ./tasks/unseen_perts/norman2019_comb_stack.h5ad
+    value: ./tasks_data/unseen_perts/norman2019_comb_stack.h5ad
   data.embedding_key:
     value: null
 
@@ -48,7 +48,7 @@ parameters:
   data.cell_set_len:
     values: [128]
   data.transform.gene_map_path:
-    value: ./ESM2_pert_features.pt
+    value: ./tasks_data/model_related/ESM2_pert_features.pt
 
   model.use_mask:
     value: false

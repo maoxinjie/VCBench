@@ -13,7 +13,7 @@ parameters:
   # data.task:
   #   value: srivatsantrapnell2020_sciplex3
   data.data_path:
-    values: [tasks/unseen_perts/SrivatsanTrapnell2020_sciplex3_stack_hvg_split.h5ad]
+    values: [./tasks_data/unseen_perts/SrivatsanTrapnell2020_sciplex3_stack_hvg_split.h5ad]
 
   data.embedding_key:
     value: stack-embed
@@ -39,7 +39,7 @@ parameters:
     value: 0
 
   data.transform.drug_map_path:
-    value: SMILES_pert_features.pt
+    value: ./tasks_data/model_related/SMILES_pert_features.pt
 
   model.use_mask:
     value: false

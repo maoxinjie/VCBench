@@ -21,7 +21,7 @@ parameters:
   # data.task:
   #   value: srivatsantrapnell2020_sciplex3
   data.data_path:
-    value: tasks/unseen_perts/ReplogleWeissman2022_K562_stack_hvg_split.h5ad
+    value: ./tasks_data/unseen_perts/ReplogleWeissman2022_K562_stack_hvg_split.h5ad
   # data.embedding_key:
   #   value: scgpt_embeddings  # if the dataset includes scGPT embeddings
 
@@ -49,7 +49,7 @@ parameters:
   model.use_cell_emb:
     value: false
   model.data_path:
-    value: ./gears_replogle
+    value: ./tasks_data/gears_replogle
 
   data.train_batch_size:
     values: [32]

@@ -13,7 +13,7 @@ parameters:
   # data.task:
   #   value: srivatsantrapnell2020_sciplex3
   data.data_path:
-    value: ./tasks/unseen_perts/norman2019_comb_stack.h5ad
+    value: ./tasks_data/unseen_perts/norman2019_comb_stack.h5ad
   # data.embedding_key:
   #   value: scgpt_embeddings  # if the dataset includes scGPT embeddings
   data.cov_keys:
@@ -48,7 +48,7 @@ parameters:
   model.use_cell_emb:
     value: false
   model.data_path:
-    value: ./gears_norman
+    value: ./tasks_data/gears_norman
 
   data.train_batch_size:
     values: [32]
