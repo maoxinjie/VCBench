@@ -3,7 +3,8 @@
 VCBench is a unified framework for single-cell perturbation effect prediction and fair benchmarking. It supports multi-dataset, multi-model training workflows with reproducible experiment management based on Hydra + Weights & Biases (W&B).
 
 Paper demo site: <https://maoxinjie.github.io/VCBench-demo/>
-arXiv: <https//arxiv.org/abs/2604.27646/>
+
+arXiv: <https://arxiv.org/abs/2604.27646/>
 
 ---
 
